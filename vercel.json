@@ -1,7 +1,6 @@
 {
     "buildCommand": "",
     "outputDirectory": "",
-    "framework": "static",
     "routes": [
         {
             "src": "/api/(.*)",
