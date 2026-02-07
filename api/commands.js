@@ -1,7 +1,6 @@
 // Vercel API endpoint - POST /api/commands
 
 export default async function handler(req, res) {
-    // Only allow POST requests
     if (req.method !== 'POST') {
         return res.status(405).json({
             status: 'error',
@@ -12,7 +11,6 @@ export default async function handler(req, res) {
 
     const command = req.body;
 
-    // Validate command
     if (!command || !command.action) {
         return res.status(400).json({
             status: 'error',
@@ -21,18 +19,9 @@ export default async function handler(req, res) {
         });
     }
 
-    // Get the WebSocket server URL from environment or use default
-    const GODOT_WS_URL = process.env.GODOT_WS_URL || 'ws://localhost:8765';
-
     try {
-        // For local development, we can proxy to the local Godot server
-        // Note: This requires the Godot Editor to be running with the AI Builder addon
-        
-        // Simulated response for demo purposes when Godot is not available
         const simulatedResponse = simulateCommand(command);
-        
         res.status(200).json(simulatedResponse);
-        
     } catch (error) {
         console.error('Command execution error:', error);
         res.status(500).json({
@@ -43,10 +32,6 @@ export default async function handler(req, res) {
     }
 }
 
-/**
- * Simulate command response for demo purposes
- * In production, this would connect to the actual Godot Editor
- */
 function simulateCommand(command) {
     const action = command.action;
     const timestamp = Date.now() / 1000;
@@ -66,12 +51,7 @@ function simulateCommand(command) {
                 status: 'success',
                 version: 1,
                 timestamp: timestamp,
-                scene_tree: {
-                    '/root': {
-                        type: 'Node',
-                        children: []
-                    }
-                },
+                scene_tree: { '/root': { type: 'Node', children: [] } },
                 scripts: {},
                 note: 'Demo mode - connect Godot Editor for real data'
             };
@@ -91,7 +71,7 @@ function simulateCommand(command) {
             return {
                 status: 'success',
                 action: 'create_scene',
-                scene_path: command.save_path || 'res://scenes/' + command.name.toLowerCase() + '.tscn',
+                scene_path: command.save_path || 'res://scenes/' + (command.name || 'scene').toLowerCase() + '.tscn',
                 root_node_type: command.scene_type || 'Node3D',
                 root_node_name: command.name,
                 note: 'Demo mode - scene not actually created'
@@ -102,7 +82,7 @@ function simulateCommand(command) {
                 status: 'success',
                 action: 'add_node',
                 node_type: command.node_type,
-                node_path: command.parent_path + '/' + command.name,
+                node_path: (command.parent_path || '/root') + '/' + (command.name || 'Node'),
                 note: 'Demo mode - node not actually added'
             };
             

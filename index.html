@@ -41,18 +41,10 @@
                 <section class="panel">
                     <h2>Command Templates</h2>
                     <div class="template-list">
-                        <button class="btn btn-outline template-btn" data-template="player">
-                            👤 Add Player
-                        </button>
-                        <button class="btn btn-outline template-btn" data-template="camera">
-                            📷 Add Camera
-                        </button>
-                        <button class="btn btn-outline template-btn" data-template="light">
-                            💡 Add Light
-                        </button>
-                        <button class="btn btn-outline template-btn" data-template="script">
-                            📝 Create Script
-                        </button>
+                        <button class="btn btn-outline template-btn" data-template="player">👤 Add Player</button>
+                        <button class="btn btn-outline template-btn" data-template="camera">📷 Add Camera</button>
+                        <button class="btn btn-outline template-btn" data-template="light">💡 Add Light</button>
+                        <button class="btn btn-outline template-btn" data-template="script">📝 Create Script</button>
                     </div>
                 </section>
             </aside>
@@ -85,14 +77,10 @@
                             </select>
                         </div>
 
-                        <div id="parametersContainer">
-                            <!-- Dynamic parameters will be inserted here -->
-                        </div>
+                        <div id="parametersContainer"></div>
 
                         <div class="form-group">
-                            <label>
-                                <input type="checkbox" id="autoRun"> Auto-run after command
-                            </label>
+                            <label><input type="checkbox" id="autoRun"> Auto-run after command</label>
                         </div>
 
                         <button id="sendCommandBtn" class="btn btn-primary" disabled>Send Command</button>
@@ -103,15 +91,12 @@
                     <div class="game-builder">
                         <div class="form-group">
                             <label for="gameDescription">Describe Your Game</label>
-                            <textarea id="gameDescription" rows="6" placeholder="Describe the game you want to create...
-Example: Create a third-person survival game with inventory system"></textarea>
+                            <textarea id="gameDescription" rows="6" placeholder="Describe the game you want to create..."></textarea>
                         </div>
                         <button id="buildGameBtn" class="btn btn-primary" disabled>Build Game</button>
 
                         <div id="builderProgress" class="progress-container hidden">
-                            <div class="progress-bar">
-                                <div class="progress-fill" id="progressFill"></div>
-                            </div>
+                            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
                             <p id="progressText">Building game...</p>
                         </div>
                     </div>
@@ -132,22 +117,10 @@ Example: Create a third-person survival game with inventory system"></textarea>
                 <section class="panel">
                     <h2>Performance</h2>
                     <div class="metrics-grid">
-                        <div class="metric">
-                            <span class="metric-label">FPS</span>
-                            <span class="metric-value" id="fpsValue">--</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">Draw Calls</span>
-                            <span class="metric-value" id="drawCallsValue">--</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">Nodes</span>
-                            <span class="metric-value" id="nodesValue">--</span>
-                        </div>
-                        <div class="metric">
-                            <span class="metric-label">Memory (MB)</span>
-                            <span class="metric-value" id="memoryValue">--</span>
-                        </div>
+                        <div class="metric"><span class="metric-label">FPS</span><span class="metric-value" id="fpsValue">--</span></div>
+                        <div class="metric"><span class="metric-label">Draw Calls</span><span class="metric-value" id="drawCallsValue">--</span></div>
+                        <div class="metric"><span class="metric-label">Nodes</span><span class="metric-value" id="nodesValue">--</span></div>
+                        <div class="metric"><span class="metric-label">Memory (MB)</span><span class="metric-value" id="memoryValue">--</span></div>
                     </div>
                     <button id="refreshMetrics" class="btn btn-outline btn-small" disabled>Refresh</button>
                 </section>
@@ -161,14 +134,6 @@ Example: Create a third-person survival game with inventory system"></textarea>
             </aside>
         </main>
     </div>
-
-    <!-- Templates for dynamic content -->
-    <template id="parameterTemplate">
-        <div class="parameter-field">
-            <label></label>
-            <input type="text" class="param-input">
-        </div>
-    </template>
 
     <script src="app.js"></script>
 </body>

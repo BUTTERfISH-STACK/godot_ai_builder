@@ -1,10 +1,11 @@
 {
-    "buildCommand": "npm run build",
-    "outputDirectory": ".",
-    "rewrites": [
+    "buildCommand": "",
+    "outputDirectory": "",
+    "framework": "static",
+    "routes": [
         {
-            "source": "/(.*)",
-            "destination": "/index.html"
+            "src": "/api/(.*)",
+            "dest": "/api/$1"
         }
     ],
     "headers": [
