@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Godot AI Builder</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>🤖 Godot AI Builder</h1>
+            <div class="connection-status" id="connectionStatus">
+                <span class="status-dot"></span>
+                <span class="status-text">Disconnected</span>
+            </div>
+        </header>
+
+        <main class="app-main">
+            <aside class="sidebar">
+                <section class="panel">
+                    <h2>Connection</h2>
+                    <div class="form-group">
+                        <label for="serverUrl">Server URL</label>
+                        <input type="text" id="serverUrl" value="ws://localhost:8765" placeholder="ws://localhost:8765">
+                    </div>
+                    <button id="connectBtn" class="btn btn-primary">Connect</button>
+                    <button id="disconnectBtn" class="btn btn-secondary" disabled>Disconnect</button>
+                </section>
+
+                <section class="panel">
+                    <h2>Quick Actions</h2>
+                    <div class="quick-actions">
+                        <button class="btn btn-outline" data-action="create_scene">Create Scene</button>
+                        <button class="btn btn-outline" data-action="get_snapshot">Get Snapshot</button>
+                        <button class="btn btn-outline" data-action="get_performance">Performance</button>
+                        <button class="btn btn-outline" data-action="get_status">Status</button>
+                    </div>
+                </section>
+
+                <section class="panel">
+                    <h2>Command Templates</h2>
+                    <div class="template-list">
+                        <button class="btn btn-outline template-btn" data-template="player">
+                            👤 Add Player
+                        </button>
+                        <button class="btn btn-outline template-btn" data-template="camera">
+                            📷 Add Camera
+                        </button>
+                        <button class="btn btn-outline template-btn" data-template="light">
+                            💡 Add Light
+                        </button>
+                        <button class="btn btn-outline template-btn" data-template="script">
+                            📝 Create Script
+                        </button>
+                    </div>
+                </section>
+            </aside>
+
+            <section class="content-area">
+                <div class="tabs">
+                    <button class="tab active" data-tab="command">Send Command</button>
+                    <button class="tab" data-tab="builder">Game Builder</button>
+                    <button class="tab" data-tab="output">Output</button>
+                </div>
+
+                <div class="tab-content active" id="command-tab">
+                    <div class="command-form">
+                        <div class="form-group">
+                            <label for="actionSelect">Action</label>
+                            <select id="actionSelect">
+                                <option value="create_scene">create_scene</option>
+                                <option value="add_node">add_node</option>
+                                <option value="set_property">set_property</option>
+                                <option value="attach_script">attach_script</option>
+                                <option value="create_script">create_script</option>
+                                <option value="modify_script">modify_script</option>
+                                <option value="delete_node">delete_node</option>
+                                <option value="run_scene">run_scene</option>
+                                <option value="save_scene">save_scene</option>
+                                <option value="get_snapshot">get_snapshot</option>
+                                <option value="get_performance">get_performance</option>
+                                <option value="get_status">get_status</option>
+                                <option value="get_protocol">get_protocol</option>
+                            </select>
+                        </div>
+
+                        <div id="parametersContainer">
+                            <!-- Dynamic parameters will be inserted here -->
+                        </div>
+
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="autoRun"> Auto-run after command
+                            </label>
+                        </div>
+
+                        <button id="sendCommandBtn" class="btn btn-primary" disabled>Send Command</button>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="builder-tab">
+                    <div class="game-builder">
+                        <div class="form-group">
+                            <label for="gameDescription">Describe Your Game</label>
+                            <textarea id="gameDescription" rows="6" placeholder="Describe the game you want to create...
+Example: Create a third-person survival game with inventory system"></textarea>
+                        </div>
+                        <button id="buildGameBtn" class="btn btn-primary" disabled>Build Game</button>
+
+                        <div id="builderProgress" class="progress-container hidden">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <p id="progressText">Building game...</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="output-tab">
+                    <div class="output-panel">
+                        <div class="output-header">
+                            <h3>Response Output</h3>
+                            <button id="clearOutput" class="btn btn-small">Clear</button>
+                        </div>
+                        <div id="outputLog" class="output-log"></div>
+                    </div>
+                </div>
+            </section>
+
+            <aside class="sidebar-right">
+                <section class="panel">
+                    <h2>Performance</h2>
+                    <div class="metrics-grid">
+                        <div class="metric">
+                            <span class="metric-label">FPS</span>
+                            <span class="metric-value" id="fpsValue">--</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Draw Calls</span>
+                            <span class="metric-value" id="drawCallsValue">--</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Nodes</span>
+                            <span class="metric-value" id="nodesValue">--</span>
+                        </div>
+                        <div class="metric">
+                            <span class="metric-label">Memory (MB)</span>
+                            <span class="metric-value" id="memoryValue">--</span>
+                        </div>
+                    </div>
+                    <button id="refreshMetrics" class="btn btn-outline btn-small" disabled>Refresh</button>
+                </section>
+
+                <section class="panel">
+                    <h2>History</h2>
+                    <div id="commandHistory" class="command-history">
+                        <p class="empty-state">No commands sent yet</p>
+                    </div>
+                </section>
+            </aside>
+        </main>
+    </div>
+
+    <!-- Templates for dynamic content -->
+    <template id="parameterTemplate">
+        <div class="parameter-field">
+            <label></label>
+            <input type="text" class="param-input">
+        </div>
+    </template>
+
+    <script src="app.js"></script>
+</body>
+</html>
