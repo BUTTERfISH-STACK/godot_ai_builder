@@ -1,0 +1,8 @@
+# Godot AI Builder - Python Server Dependencies
+# =============================================
+# Install with: pip install -r requirements.txt
+
+# WebSocket support
+websockets>=10.0
+
+# Note: Python 3.7+ required (uses asyncio features)
